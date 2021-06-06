@@ -1,25 +1,37 @@
 
-/*Bidirectional list definition*/
+/****************************Bi-directional list*****************************/
+
+/*
+ * Bidirectional list that mimics the beahviour of CD-ROM audio(TD5)
+ *
+ *
+ * */
+
 typedef struct {
     int code;
-    char titre[10];
-    char artiste[10];
+    char titre[50];
+    char artiste[20];
     int duree;
+
 }piste;
 
 struct noeud{
-    struct noeud* avant;
+    struct noeud* prec;
     piste info;
-    struct noeud* suivant;
+    struct noeud* suiv;
 };
+
+
 struct liste{
     struct noeud* tete;
-    struct noeud* queue;
-
+    struct noeud* queu;
 };
 
-void creer_liste(struct liste *);
+
+void creer_liste(struct liste *l);
+unsigned liste_vide(struct liste l);
+void initialiser(piste x,struct liste *l);
 piste saisie();
-void ajout_apres_dernier(struct liste *);
-void remplir(struct liste *);
-void affiche(struct liste);
+void ajouter_ap_dernier(struct liste* l);
+void remplir(struct liste *l);
+void affiche(struct liste l);
