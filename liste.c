@@ -52,11 +52,17 @@ void ajouter_ap_dernier(struct liste* l){
     l->queu = q;
 
 }
-void ajouter_av_premier(struct noeud* p,struct liste *l)
+void ajouter_av_premier(piste  x,struct liste *l)
 {
-   /*We will already have the node filled and ready to go*/ 
+   /*changed the argument from total node to piste bcuz
+    * otherwhise we would be fu with pointers,as the pmin was supposed to be 
+    * deleted in supp_chanson so we wouldn't have access to that node anymore
+    *  so i'd pretty much prefer passing the content over the parameter
+    *  and hands down*/ 
     
-    printf("\nreached up here4\n");
+    struct noeud* p = (struct noeud*)malloc(sizeof(struct noeud));
+    p->info = x;
+
     p->prec= NULL;
     if(liste_vide(*l))
     { //comme initialiser
@@ -102,7 +108,6 @@ struct noeud* min_piste(struct liste l)
  /*chercher et retourner @ de la piste ayant une duree minmale de 
   * la liste l1*/
 
-    printf("\nreached up here3\n");
     assert(!liste_vide(l));
     struct noeud * pmin = l.tete,*p= l.tete->suiv;
 
@@ -144,7 +149,7 @@ void supp_chanson(struct noeud* pmin,struct liste *l)
         pmin->prec->suiv = pmin->suiv;
     }
 
-    free(pmin);
+    free(pmin); //Segmentation fault occured when deleted
 }
 void tri(struct liste *l1,struct liste *l2)
 {
@@ -154,12 +159,10 @@ void tri(struct liste *l1,struct liste *l2)
         inserer la piste cherché entete dans la liste l2
      * */
     struct noeud* pmin;
-    printf("\nreached up here\n");
     while(!liste_vide(*l1))
     {
-    printf("\nreached up her2\n");
        pmin = min_piste(*l1); 
-       ajouter_av_premier(pmin,l2);
+       ajouter_av_premier(pmin->info,l2);
        supp_chanson(pmin,l1);
        
     }
